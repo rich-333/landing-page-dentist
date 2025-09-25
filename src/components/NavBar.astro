@@ -1,0 +1,60 @@
+---
+import Logo from "../assets/icons/logo.svg"
+import Menu from "../assets/icons/menu.svg"
+import { navLinks } from "../data/navBar"
+import type { NavLinks } from "../data/navBar"
+---
+
+<div class="sticky z-50 top-0 bg-primary-white">
+  <div class="flex justify-between px-5 py-7">
+  
+    <div class="flex gap-28">
+      <Logo />
+      <div class="flex flex-col gap-2.5 items-center">
+        <h2 class="font-normal">Odontologia Integral</h2>
+        <span class="text-xs font-light">Salud & Estetica Dental</span>
+      </div>
+    </div>
+
+    <button id="open-menu" aria-controls="menu" aria-expanded="false">
+      <Menu class="hover:scale-115 transition-transform duration-200 cursor-pointer"/>
+    </button>
+
+  </div>
+
+  <nav id="menu" class="hidden w-full flex-col items-center py-5 absolute bg-primary-white h-80 ">
+    <ul class="flex flex-col gap-8 text-center">
+      {
+        navLinks.map((link: NavLinks) => (
+            <li>
+              <a class="block text-black hover:text-primary-blue transition-all duration-200 font-semibold" href={link.href}>{link.name}</a>
+            </li>
+        ))
+      }
+    </ul>
+    <button id="contact" class="border-2 border-primary-gray text-primary-gray font-semibold px-6 py-3 rounded-lg w-40 cursor-pointer mt-12 hover:border-primary-blue hover:text-primary-blue transition-all duration-200">
+      Saca tu turno
+    </button>
+  </nav>
+</div>
+
+<script>
+  const btnToggleMenu = document.getElementById("open-menu");
+  const menu = document.getElementById("menu");
+  const links = menu?.querySelectorAll("a");
+  const btnContact = document.getElementById("contact");
+
+  function closeMenu() {
+    menu?.classList.add('hidden')
+  }
+
+  btnToggleMenu?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden')
+    menu?.classList.add('flex')
+    btnToggleMenu.setAttribute("aria-expanded", "true")
+  })
+
+  links?.forEach(link => link.addEventListener('click', closeMenu));
+
+  btnContact?.addEventListener('click', closeMenu)
+</script>

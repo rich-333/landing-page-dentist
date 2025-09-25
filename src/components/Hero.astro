@@ -1,0 +1,27 @@
+---
+import NavBar from "./NavBar.astro";
+import heroImage from "../assets/images/heroImage.svg?url"
+import heroBackground from "../assets/images/heroBackground.svg?url"
+---
+
+<header>
+  <NavBar/>
+  <div class="relative h-145">
+    <img class="w-full h-170 max-w-xl max-h-xl relative bottom-25" src={heroBackground} loading="lazy">
+    <picture>
+      <source srcset="" media="(min-width: 1024px)">
+      <img class="absolute top-5 left-0 w-130 h-130" src={heroImage} alt="Dentista revisando los dientes de un paciente" loading="lazy">
+    </picture>
+  </div>
+  <div class="px-5 flex flex-col gap-y-5">
+    <span class=" text-primary-blue font-normal">En Cordoba Capital</span>
+    <h1 class="text-dark-blue text-3xl font-semibold w-80 leading-12">Una excelente experiencia <span class="text-blue">Odontológica</span></h1>
+    <p class="text-primary-black leading-6">
+      Lorem ipsum dolor sit amet consectetur adipiscing elit molestie, rhoncus luctus arcu ut eros augue. Eu commodo laoreet parturient quam purus magna pretium luctus.
+    </p>
+    <div class=" flex justify-between">
+      <button class="px-6 py-3 bg-blue rounded-lg text-primary-white font-medium shadow-[3px_3px_#2977d5]">Saca tu turno</button>
+      <button class="rounded-lg border-1 border-gray-500 px-4 py-3">Nuestros Servicios</button>
+    </div>
+  </div>
+</header>
