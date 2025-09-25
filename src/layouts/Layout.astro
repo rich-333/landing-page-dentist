@@ -2,6 +2,7 @@
 import "../styles/global.css"
 import Hero from "../components/Hero.astro"
 import Footer from "../components/Footer.astro"
+import IslandInfo from "../components/IslandInfo.astro"
 ---
 
 <html lang="en">
@@ -13,9 +14,9 @@ import Footer from "../components/Footer.astro"
 		<meta name="description" content="">
 		<title>Astro</title>
 	</head>
-	<body class="font-primary text-sm">
+	<body class="font-primary text-sm box-border">
 		<Hero/>
-		<h1>Astro</h1>
+		<IslandInfo/>
         <slot/>
 		<Footer/>
 	</body>
