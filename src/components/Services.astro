@@ -2,13 +2,11 @@
 import type { Service } from "../data/services";
 import { services } from "../data/services";
 import seeMore from "../assets/icons/seeMore.svg?url";
+import HeaderSection from "./HeaderSection.astro";
 ---
 
 <section class="py-15 px-5">
-  <header class="flex flex-col gap-5 mb-10">
-    <p class=" text-primary-blue font-normal">Especialidades</p>
-    <h2 class=" text-dark-blue text-3xl font-semibold text-shadow-[5px_5px_#D4E4F4]">Nuestros Servicios</h2>
-  </header>
+  <HeaderSection sectionTitle="Nuestros Servicios" sectionSubtitle="Especialidades" />
   <div class="flex flex-col gap-10">
     {
       services.map((service: Service) => (
