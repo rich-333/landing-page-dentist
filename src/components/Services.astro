@@ -1,0 +1,29 @@
+---
+import type { Service } from "../data/services";
+import { services } from "../data/services";
+import seeMore from "../assets/icons/seeMore.svg?url";
+---
+
+<section class="py-15 px-5">
+  <header class="flex flex-col gap-5 mb-10">
+    <p class=" text-primary-blue font-normal">Especialidades</p>
+    <h2 class=" text-dark-blue text-3xl font-semibold text-shadow-[5px_5px_#D4E4F4]">Nuestros Servicios</h2>
+  </header>
+  <div class="flex flex-col gap-10">
+    {
+      services.map((service: Service) => (
+        <article class="flex flex-col gap-5 bg-primary-white p-5 rounded-2xl shadow-[1px_1px_10px_#D4E4F4]">
+          <img class="w-16.5 h-18" src={ service.icon } alt={ service.title } />
+          <h3 class=" text-primary-blue text-xl font-semibold">{ service.title }</h3>
+          <p class=" leading-6 text-gray font-light">{ service.description }</p>
+          <div class="flex gap-3">
+            <a class="font-light text-blue flex gap-3" href={ service.href }>
+              Ver mas
+              <img src={ seeMore } alt="ver mas"/>
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
