@@ -8,7 +8,7 @@ interface Props {
 const { sectionTitle,  sectionSubtitle, class: extraClass = ""} = Astro.props
 ---
 
-<header class={`flex flex-col gap-5 mb-10 ${extraClass}`}>
+<header class={`flex flex-col gap-5 ${extraClass}`}>
   <p class=" text-primary-blue font-normal">{ sectionSubtitle }</p>
   <h2 class=" text-dark-blue text-3xl font-semibold text-shadow-[5px_5px_#D4E4F4]">{ sectionTitle }</h2>
 </header>

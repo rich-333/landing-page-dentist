@@ -1,0 +1,29 @@
+---
+import HeaderSection from "./HeaderSection.astro";
+import type { Testimony } from "../data/testimonial";
+import { testimonies } from "../data/testimonial";
+---
+
+<section class="py-15 px-5 flex flex-col gap-10">
+  <HeaderSection sectionTitle="Lo que opinan nuestros Pacientes" sectionSubtitle="Testimonios" class="text-center"/>
+  {
+    testimonies.map((testimony: Testimony) => (
+      <article class=" bg-primary-white py-7.5 px-5 shadow-[5px_5px_20px_#D4E4F4] rounded-xl flex flex-col gap-5">
+        <header class="flex justify-between items-center">
+          <h3 class="text-xl font-semibold text-primary-black">{ testimony.name }</h3>
+          <img src={ testimony.score } />
+        </header>
+        <p class="font-normal leading-6 text-gray">{ testimony.comment }</p>
+      </article>
+      <div class="flex justify-center gap-3">
+        <button aria-label="Review 1" class="rounded-full w-2.5 h-2.5 bg-circle-testimonial"></button>
+      </div>
+    ))
+  }
+
+  <div class="flex justify-center">
+    <button class=" font-medium text-primary-blue border-2 border-primary-blue w-34 h-10 rounded-lg cursor-pointer hover:text-blue-400 hover:border-blue-400 focus:text-blue-400 focus:border-blue-400 active:scale-90 transition-all duration-75">
+      Ver Mas Reviews
+    </button>
+  </div>
+</section>
