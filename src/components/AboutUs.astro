@@ -1,0 +1,18 @@
+---
+import HeaderSection from "./HeaderSection.astro";
+import imgAvatar from "../assets/images/aboutUs.svg?url";
+import type { AboutUs } from "../data/aboutUs";
+import { aboutUs } from "../data/aboutUs";
+---
+
+<section class="px-5 py-15 flex flex-col gap-5">
+  <img class="w-full" src={imgAvatar} alt="Dra. Patricia Nieves Kiriaco">
+  <HeaderSection sectionTitle="Dra. Patricia Nieves Kiriaco" sectionSubtitle="Sobre Mi"/>
+  <ul class="list-disc list-outside space-y-2 font-normal pl-6">
+    {
+      aboutUs.map((about: AboutUs, index) => (
+        index > 3 ? <li class="mx-6">{ about.qualities }</li> : <li>{ about.qualities }</li>
+      ))
+    }
+  </ul>
+</section>
