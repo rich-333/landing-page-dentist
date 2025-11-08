@@ -1,0 +1,53 @@
+---
+import HeaderSection from "./HeaderSection.astro"
+import FormContact from "./FormContact.astro"
+import type { Contacts } from "../data/contact"
+import { cont } from "../data/contact"
+
+import Facebook from "../assets/icons/facebook.svg"
+import Instagram from "../assets/icons/instagram.svg"
+import Linkedin from "../assets/icons/linkedin.svg"
+---
+
+<section class=" pt-15">
+  <HeaderSection sectionSubtitle="Saca un turno" sectionTitle="Contacto" class=" items-end px-5 mb-10"/>
+
+  <FormContact />
+
+  <section class=" flex flex-col gap-11 pt-20 px-16">
+    {
+      cont.map((c: Contacts, index) => (
+        <div>
+          <div class=" flex flex-col gap-6">
+            <div class=" flex items-center gap-5">
+              <img src={ c.icon } alt="" aria-hidden="true"/>
+              <h3 class=" text-xl font-light">{ c.title }</h3>
+            </div>
+            <p class=" text-xs ml-13 font-normal">{ c.contact }</p>
+          </div>
+          <hr class=" last:hidden text-primary-white"/>
+        </div>
+      ))
+    }
+  </section>
+
+  <nav class="py-15 px-16 ">
+    <ul class=" flex justify-between">
+      <li>
+        <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+          <Facebook class=" text-primary-white"/>
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <Linkedin class="text-primary-white"/>
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <Instagram class="text-primary-white"/>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</section>
