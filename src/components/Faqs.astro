@@ -1,0 +1,75 @@
+---
+import HeaderSection from "./HeaderSection.astro"
+import type { Faqs } from "../data/faqs"
+import { faqs } from "../data/faqs"
+import arrow from "../assets/icons/down-arrow.svg?url";
+---
+
+<section class="py-15 px-5">
+  <HeaderSection sectionSubtitle="Sacate las dudas" sectionTitle="Preguntas Frecuentes" class=" text-center"/>
+
+  <div class=" mt-10">
+    {
+      faqs.map((faq: Faqs) => (
+        <details class=" flex flex-col gap-5" id={faq.id}>
+          <summary 
+            aria-expanded="false" 
+            class=" flex justify-between items-center rounded-2xl bg-primary-white border-1 border-light-blue shadow-[5px_5px_0_#D4E4F4] px-6 py-6">
+            <h3 class=" text-dark-blue text-sm font-medium">{ faq.question }</h3>
+            <img class="arrow__icon" src={ arrow } aria-hidden="true" />
+          </summary>
+          <div class="container__answer">
+            <p class="text-sm font-normal">{ faq.answer }</p>
+          </div>
+        </details>
+      ))
+    }
+  </div>
+
+</section>
+
+<style>
+  summary {
+    list-style: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  summary:hover {
+    box-shadow: 7px 7px 0 #D4E4F4;
+    transform: translate(-2px, -2px);
+  }
+
+  .arrow__icon {
+    transition: transform 0.3s ease;
+  }
+
+  details[open] .arrow__icon {
+    transform: rotate(180deg);
+  }
+
+  details[open] summary {
+    border-radius: 16px 16px 0 0;
+  }
+
+  .container__answer {
+    padding: 20px;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 5px 5px 0 var(--color-light-blue);
+    color: var(--color-dark-blue);
+    background-color: var(--color-primary-white);
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-light-blue);
+  }
+</style>
+
+<script>
+  const details = document.querySelectorAll('details')
+
+  details.forEach((detail) => {
+    detail.addEventListener("toggle", () => {
+      const summary = document.querySelector('summary')
+      summary?.setAttribute('aria-expanded', detail.open.toString())
+    })
+  })
+</script>
