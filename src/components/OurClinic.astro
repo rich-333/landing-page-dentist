@@ -1,0 +1,65 @@
+---
+import HeaderSection from "./HeaderSection.astro";
+import type { Clinic } from "../data/ourClinic";
+import { images } from "../data/ourClinic";
+---
+
+<section class="py-15 px-5">
+  <HeaderSection sectionSubtitle="Las instalaciones" sectionTitle="Nuestra Clinica" class="mb-10"/>
+  <div class="slider__wrapper">
+    <div class="slider__images" aria-label="Galería de imágenes de la clínica" role="region">
+      {
+        images.map((img: Clinic) => (
+          <img class="rounded-2xl w-full object-cover" id={img.id} src={img.image} alt={img.alt} loading="lazy" decoding="async"/>
+        ))
+      }
+    </div>
+    <nav class="slider__nav flex justify-center gap-4 mt-5" aria-label="Navegación de galería" role="tablist">
+      {
+        images.map((img, index) => (
+          <a
+            href={"#" + img.id}
+            class={`dot w-3 h-3 rounded-full transition-all duration-300 cursor-pointer bg-gray-300 hover:bg-primary-blue hover:scale-130 ${index === 0 ? 'bg-primary-blue scale-130' : 'bg-gray-300'}`}
+            data-index={index}
+            aria-label={`Ver imagen: ${img.alt}`}
+            aria-current={index === 0 ? 'true' : 'false'}
+          ></a>
+        ))
+      }
+    </nav>
+  </div>
+</section>
+
+<style>
+  .slider__wrapper {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .slider__images {
+    display: flex;
+    aspect-ratio: 16 / 9;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    box-shadow: 0 .25rem 5rem #21212126;
+  }
+
+  .slider__images img {
+    flex: 1 0 100%;
+    scroll-snap-align: start;
+  }
+</style>
+
+<script>
+  const navs = document.querySelectorAll('.dot')
+  const images = document.querySelectorAll('.slider__images img')
+
+  navs.forEach((nav) => {
+    nav.addEventListener('click' ,() => {
+      navs.forEach(n => n.classList.remove('bg-primary-blue', 'scale-130'))
+      nav.classList.add('bg-primary-blue', 'scale-130')
+    })
+  })
+</script>
