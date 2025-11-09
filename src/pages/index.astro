@@ -4,6 +4,10 @@ import IslandInfo from "../components/IslandInfo.astro";
 import Services from "../components/Services.astro";
 import Testimonial from "../components/Testimonial.astro";
 import Layout from "../layouts/Layout.astro";
+import OurClinic from "../components/OurClinic.astro";
+import Faqs from "../components/Faqs.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout>
@@ -11,4 +15,9 @@ import Layout from "../layouts/Layout.astro";
   <Services/>
   <Testimonial />
   <AboutUs />
+  <OurClinic />
+  <div class=" bg-gradient-to-b from-light-blue/10 from-25% to-primary-blue to-120%">
+    <Faqs />
+    <Contact />
+  </div>
 </Layout>
