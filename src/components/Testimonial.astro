@@ -6,20 +6,26 @@ import { testimonies } from "../data/testimonial";
 
 <section class="py-15 px-5 flex flex-col gap-10">
   <HeaderSection sectionTitle="Lo que opinan nuestros Pacientes" sectionSubtitle="Testimonios" class="text-center"/>
-  {
-    testimonies.map((testimony: Testimony) => (
-      <article class=" bg-primary-white py-7.5 px-5 shadow-[5px_5px_20px_#D4E4F4] rounded-xl flex flex-col gap-5">
-        <header class="flex justify-between items-center">
-          <h3 class="text-xl font-semibold text-primary-black">{ testimony.name }</h3>
-          <img src={ testimony.score } />
-        </header>
-        <p class="font-normal leading-6 text-gray">{ testimony.comment }</p>
-      </article>
-      <div class="flex justify-center gap-3">
-        <button aria-label="Review 1" class="rounded-full w-2.5 h-2.5 bg-circle-testimonial"></button>
-      </div>
-    ))
-  }
+  <div class="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
+    {
+      testimonies.map((testimony: Testimony, index: number) => (
+        <article
+          class={`bg-primary-white py-7.5 px-5 shadow-[5px_5px_20px_#D4E4F4] rounded-xl flex flex-col gap-5
+            max-w-[475px] testimonial__card ${index >= 3 ? 'hidden' : ''} `}
+          >
+          <header class="flex justify-between items-center">
+            <h3 class="text-xl font-semibold text-primary-black">{ testimony.name }</h3>
+            <img src={ testimony.score } />
+          </header>
+          <p class="font-normal leading-6 text-gray">{ testimony.comment }</p>
+        </article>
+      ))
+    }
+  </div>
+
+  <div id="pagination-container" class="flex justify-center gap-3">
+    
+  </div>
 
   <div class="flex justify-center">
     <button class=" font-medium text-primary-blue border-2 border-primary-blue w-34 h-10 rounded-lg cursor-pointer hover:text-blue-400 hover:border-blue-400 focus:text-blue-400 focus:border-blue-400 active:scale-90 transition-all duration-75">
@@ -27,3 +33,69 @@ import { testimonies } from "../data/testimonial";
     </button>
   </div>
 </section>
+
+<script>
+  const testimonialCards = document.querySelectorAll(".testimonial__card");
+  const paginationContainer = document.getElementById("pagination-container");
+  
+  function getItemsPerPage(): number {
+    const width = window.innerWidth;
+    if (width < 768) return 1;
+    if (width < 1024) return 2;
+    return 3;
+  }
+
+  function createPaginationButtons(totalPages: number): void {
+    if (!paginationContainer) return;
+    paginationContainer.innerHTML = "";
+    
+    for (let i = 0; i < totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.ariaLabel = `Review ${i + 1}`;
+      btn.className = `pagination-btn rounded-full w-2.5 h-2.5 cursor-pointer transition-all duration-300 ${i === 0 ? 'bg-primary-blue scale-125' : 'bg-circle-testimonial'}`;
+      btn.dataset.page = String(i);
+      btn.addEventListener("click", () => showPage(i));
+      paginationContainer.appendChild(btn);
+    }
+  }
+
+  function showPage(pageIndex: number): void {
+    const itemsPerPage = getItemsPerPage();
+    const start = pageIndex * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    testimonialCards.forEach((card, index) => {
+      if (index >= start && index < end) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add("hidden");
+      }
+    });
+
+    const paginationBtns = document.querySelectorAll(".pagination-btn");
+    paginationBtns.forEach((btn, index) => {
+      if (index === pageIndex) {
+        btn.classList.remove("bg-circle-testimonial");
+        btn.classList.add("bg-primary-blue");
+        btn.classList.add("scale-125");
+      } else {
+        btn.classList.remove("bg-primary-blue");
+        btn.classList.remove("scale-125");
+        btn.classList.add("bg-circle-testimonial");
+      }
+    });
+  }
+
+  function initPagination(): void {
+    const itemsPerPage = getItemsPerPage();
+    const totalPages = Math.ceil(testimonialCards.length / itemsPerPage);
+    createPaginationButtons(totalPages);
+    showPage(0);
+  }
+
+  initPagination();
+
+  window.addEventListener("resize", () => {
+    initPagination();
+  });
+</script>
