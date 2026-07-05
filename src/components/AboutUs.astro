@@ -5,14 +5,16 @@ import type { AboutUs } from "../data/aboutUs";
 import { aboutUs } from "../data/aboutUs";
 ---
 
-<section class="px-5 py-15 flex flex-col gap-5">
-  <img class="w-full" src={imgAvatar} alt="Dra. Patricia Nieves Kiriaco" loading="lazy">
-  <HeaderSection sectionTitle="Dra. Patricia Nieves Kiriaco" sectionSubtitle="Sobre Mi"/>
-  <ul class="list-disc list-outside space-y-2 font-normal pl-6">
-    {
-      aboutUs.map((about: AboutUs, index) => (
-        index > 3 ? <li class="mx-6">{ about.qualities }</li> : <li>{ about.qualities }</li>
-      ))
-    }
-  </ul>
+<section id="nosotros" class="px-5 py-15 flex flex-col gap-5 lg:px-10 lg:grid lg:grid-cols-2 items-center scroll-mt-20">
+  <img class="w-full lg:h-180" src={imgAvatar} alt="Dra. Patricia Nieves Kiriaco" loading="lazy">
+  <div class=" flex flex-col gap-5">
+    <HeaderSection sectionTitle="Dra. Patricia Nieves Kiriaco" sectionSubtitle="Sobre Mi"/>
+    <ul class="list-disc list-outside space-y-2 font-normal pl-6">
+      {
+        aboutUs.map((about: AboutUs, index) => (
+          index > 3 ? <li class="mx-6">{ about.qualities }</li> : <li>{ about.qualities }</li>
+        ))
+      }
+    </ul>
+  </div>
 </section>
