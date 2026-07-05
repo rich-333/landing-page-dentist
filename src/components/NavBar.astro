@@ -5,25 +5,25 @@ import { navLinks } from "../data/navBar"
 import type { NavLinks } from "../data/navBar"
 ---
 
-<div class="sticky z-50 top-0 bg-primary-white">
-  <div class="flex justify-between px-5 py-7">
+<header class="sticky z-50 top-0  lg:flex lg:justify-between lg:items-center lg:px-6 xl:px-10 bg-primary-white">
+  <div class="flex justify-between px-5 py-7 lg:px-0">
   
-    <div class="flex gap-28">
+    <div class="flex gap-28 sm:gap-52 md:gap-72 lg:gap-4">
       <Logo />
-      <div class="flex flex-col gap-2.5 items-center">
+      <div class="flex flex-col gap-2.5 items-center lg:w-44">
         <h2 class="font-normal">Odontologia Integral</h2>
         <span class="text-xs font-light">Salud & Estetica Dental</span>
       </div>
     </div>
 
     <button id="open-menu" aria-controls="menu" aria-expanded="false">
-      <Menu class="hover:scale-115 transition-transform duration-200 cursor-pointer"/>
+      <Menu class="hover:scale-115 transition-transform duration-200 cursor-pointer lg:hidden"/>
     </button>
 
   </div>
 
-  <nav id="menu" class="hidden w-full flex-col items-center py-5 absolute bg-primary-white h-80 ">
-    <ul class="flex flex-col gap-8 text-center">
+  <nav id="menu" class="hidden w-full flex-col items-center py-5 absolute bg-primary-white h-80 lg:flex lg:flex-row lg:items-center lg:bg-none lg:py-0 lg:static lg:h-auto lg:w-auto">
+    <ul class="flex flex-col gap-8 text-center lg:flex-row lg:mr-105">
       {
         navLinks.map((link: NavLinks) => (
             <li>
@@ -32,11 +32,11 @@ import type { NavLinks } from "../data/navBar"
         ))
       }
     </ul>
-    <button id="contact" class="border-2 border-primary-gray text-primary-gray font-semibold px-6 py-3 rounded-lg w-40 cursor-pointer mt-12 hover:border-primary-blue hover:text-primary-blue transition-all duration-200">
+    <button id="contact" class="border-2 border-primary-gray text-primary-gray font-semibold px-6 py-3 rounded-lg w-40 cursor-pointer mt-12 hover:border-primary-blue hover:text-primary-blue transition-all duration-200 lg:mt-0">
       Saca tu turno
     </button>
   </nav>
-</div>
+</header>
 
 <script>
   const btnToggleMenu = document.getElementById("open-menu");
