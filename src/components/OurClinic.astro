@@ -128,7 +128,7 @@ import { images } from "../data/ourClinic";
     let currentIndex = 0;
     let autoPlayId;
 
-    const updateDots = (index) => {
+    const updateDots = (index: number) => {
       dots.forEach((dot, dotIndex) => {
         const active = dotIndex === index;
         dot.classList.toggle('bg-primary-blue', active);
@@ -138,7 +138,7 @@ import { images } from "../data/ourClinic";
       });
     };
 
-    const goToSlide = (index, smooth = true) => {
+    const goToSlide = (index: number, smooth = true) => {
       currentIndex = (index + slides.length) % slides.length;
       slider.scrollTo({
         left: currentIndex * slider.clientWidth,
