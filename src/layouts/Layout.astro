@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css"
-import Hero from "../components/Hero.astro"
 import Footer from "../components/Footer.astro"
+import NavBar from "../components/NavBar.astro"
 ---
 
 <html lang="es">
@@ -13,9 +13,11 @@ import Footer from "../components/Footer.astro"
 		<meta name="description" content="">
 		<title>Astro</title>
 	</head>
-	<body class="font-primary text-sm box-border">
-		<Hero/>
-        <slot/>
+	<body class="font-primary text-sm box-border overflow-x-hidden">
+		<NavBar/>
+		<main class="">
+      <slot/> 
+		</main>
 		<Footer/>
 	</body>
 </html>
