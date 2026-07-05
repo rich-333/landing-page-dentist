@@ -4,26 +4,48 @@ import type { Clinic } from "../data/ourClinic";
 import { images } from "../data/ourClinic";
 ---
 
-<section class="py-15 px-5">
+<section class="py-15 px-5 lg:px-10">
   <HeaderSection sectionSubtitle="Las instalaciones" sectionTitle="Nuestra Clinica" class="mb-10"/>
   <div class="slider__wrapper">
-    <div class="slider__images" aria-label="Galería de imágenes de la clínica" role="region">
+    <div
+      class="slider__images"
+      aria-label="Galería de imágenes de la clínica"
+      role="region"
+      aria-live="polite"
+      tabindex="0"
+    >
       {
-        images.map((img: Clinic) => (
-          <img class="rounded-2xl w-full object-cover" id={img.id} src={img.image} alt={img.alt} loading="lazy" decoding="async"/>
+        images.map((img: Clinic, index: number) => (
+          <img
+            class="img__clinic rounded-2xl w-full object-cover"
+            id={img.id}
+            src={img.image}
+            alt={img.alt}
+            loading={index === 0 ? "eager" : "lazy"}
+            decoding="async"
+            draggable="false"
+          />
         ))
       }
     </div>
+    <button class="slider__btn slider__btn--prev" type="button" aria-label="Imagen anterior">
+      &#10094;
+    </button>
+    <button class="slider__btn slider__btn--next" type="button" aria-label="Imagen siguiente">
+      &#10095;
+    </button>
     <nav class="slider__nav flex justify-center gap-4 mt-5" aria-label="Navegación de galería" role="tablist">
       {
         images.map((img, index) => (
-          <a
-            href={"#" + img.id}
+          <button
+            type="button"
             class={`dot w-3 h-3 rounded-full transition-all duration-300 cursor-pointer bg-gray-300 hover:bg-primary-blue hover:scale-130 ${index === 0 ? 'bg-primary-blue scale-130' : 'bg-gray-300'}`}
             data-index={index}
             aria-label={`Ver imagen: ${img.alt}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
             aria-current={index === 0 ? 'true' : 'false'}
-          ></a>
+            role="tab"
+          ></button>
         ))
       }
     </nav>
@@ -49,17 +71,128 @@ import { images } from "../data/ourClinic";
   .slider__images img {
     flex: 1 0 100%;
     scroll-snap-align: start;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .slider__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-primary-black) 62%, transparent);
+    color: var(--color-primary-white);
+    font-size: 1.25rem;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform .2s ease, background-color .2s ease;
+  }
+
+  .slider__btn:hover,
+  .slider__btn:focus-visible {
+    background: color-mix(in srgb, var(--color-primary-blue) 78%, transparent);
+    transform: translateY(-50%) scale(1.06);
+  }
+
+  .slider__btn--prev {
+    left: .75rem;
+  }
+
+  .slider__btn--next {
+    right: .75rem;
+  }
+
+  @media (max-width: 640px) {
+    .slider__btn {
+      width: 2.1rem;
+      height: 2.1rem;
+      font-size: 1rem;
+    }
   }
 </style>
 
 <script>
-  const navs = document.querySelectorAll('.dot')
-  const images = document.querySelectorAll('.slider__images img')
+  const slider = document.querySelector('.slider__images');
+  const dots = Array.from(document.querySelectorAll('.dot'));
+  const slides = Array.from(document.querySelectorAll('.img__clinic'));
+  const prevBtn = document.querySelector('.slider__btn--prev');
+  const nextBtn = document.querySelector('.slider__btn--next');
 
-  navs.forEach((nav) => {
-    nav.addEventListener('click' ,() => {
-      navs.forEach(n => n.classList.remove('bg-primary-blue', 'scale-130'))
-      nav.classList.add('bg-primary-blue', 'scale-130')
-    })
-  })
+  if (slider && dots.length && slides.length && prevBtn && nextBtn) {
+    let currentIndex = 0;
+    let autoPlayId;
+
+    const updateDots = (index) => {
+      dots.forEach((dot, dotIndex) => {
+        const active = dotIndex === index;
+        dot.classList.toggle('bg-primary-blue', active);
+        dot.classList.toggle('scale-130', active);
+        dot.setAttribute('aria-current', active ? 'true' : 'false');
+        dot.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    };
+
+    const goToSlide = (index, smooth = true) => {
+      currentIndex = (index + slides.length) % slides.length;
+      slider.scrollTo({
+        left: currentIndex * slider.clientWidth,
+        behavior: smooth ? 'smooth' : 'auto'
+      });
+      updateDots(currentIndex);
+    };
+
+    const nextSlide = () => goToSlide(currentIndex + 1);
+    const prevSlide = () => goToSlide(currentIndex - 1);
+
+    const restartAutoPlay = () => {
+      if (autoPlayId) clearInterval(autoPlayId);
+      autoPlayId = setInterval(nextSlide, 5000);
+    };
+
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      restartAutoPlay();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      restartAutoPlay();
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        restartAutoPlay();
+      });
+    });
+
+    slider.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        nextSlide();
+        restartAutoPlay();
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        prevSlide();
+        restartAutoPlay();
+      }
+    });
+
+    slider.addEventListener('mouseenter', () => clearInterval(autoPlayId));
+    slider.addEventListener('mouseleave', restartAutoPlay);
+    slider.addEventListener('touchstart', () => clearInterval(autoPlayId), { passive: true });
+    slider.addEventListener('touchend', restartAutoPlay, { passive: true });
+
+    window.addEventListener('resize', () => goToSlide(currentIndex, false));
+
+    goToSlide(0, false);
+    restartAutoPlay();
+  }
 </script>
