@@ -5,12 +5,12 @@ import seeMore from "../assets/icons/seeMore.svg?url";
 import HeaderSection from "./HeaderSection.astro";
 ---
 
-<section class="py-15 px-5 flex flex-col gap-7.5">
+<section id="servicio" class="py-15 px-5 flex flex-col gap-7.5 lg:px-10 services__bg lg:mt-10">
   <HeaderSection sectionTitle="Nuestros Servicios" sectionSubtitle="Especialidades" />
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-10 lg:grid lg:grid-cols-3 lg:grid-rows-2">
     {
       services.map((service: Service) => (
-        <article class="flex flex-col gap-5 bg-primary-white p-5 rounded-2xl shadow-[1px_1px_10px_#D4E4F4]">
+        <article class="flex flex-col gap-5 bg-primary-white p-5 rounded-2xl shadow-[1px_1px_10px_#D4E4F4] lg:bg-primary-white/60">
           <img class="w-16.5 h-18" src={ service.icon } alt={ service.title } />
           <h3 class=" text-primary-blue text-xl font-semibold">{ service.title }</h3>
           <p class=" leading-6 text-gray font-light">{ service.description }</p>
@@ -25,3 +25,14 @@ import HeaderSection from "./HeaderSection.astro";
     }
   </div>
 </section>
+
+<style>
+  @media (min-width: 1024px) {
+    .services__bg {
+      background-image: url("../assets/images/servicesBackground.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: right;
+    }
+  }
+</style>
